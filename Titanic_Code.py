@@ -11,6 +11,12 @@ from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier, Gradien
 # Metrics Imports
 from sklearn.metrics import f1_score
 
+# For Saving Models 
+import joblib
+
+# Finding Best Parameters
+from sklearn.model_selection import GridSearchCV
+
 
 data = pd.read_csv("./preprocessed_data3.csv", index_col=None) 
 
@@ -86,6 +92,30 @@ predicted_labels_ab = ab_model.predict(features_validation)
 print("ab: ", f1_score(labels_validation, predicted_labels_ab))
 
 
+# AdaBoost Is The Best So..
+print("AdaBoost Score: ", ab_model.score(features_test, labels_test))
+predicted_test_labels_ab = ab_model.predict(features_test)
+print("AdaBoost F1-Score: ", f1_score(labels_test, predicted_test_labels_ab))
+
+# joblib.dump(ab_model, "adaboost_model.pkl")
+
+# Grid Search (on worst model)
+svm_parameters = {'kernel':['rbf'],
+                  'C': [0.01, 0.1, 1, 10, 100],
+                  'gamma': [0.01, 0.1, 1, 10, 100]}
+
+svm = SVC()
+
+svm_gs = GridSearchCV(estimator=svm, 
+                      param_grid=svm_parameters)
+
+svm_gs.fit(features_train, labels_train)
+svm_winner = svm_gs.best_estimator_
+print(svm_winner.score(features_validation, labels_validation))
+print(svm_winner)
+
+# Cross Validation 
+print(svm_gs.cv_results_)
 
 
 
