@@ -2,4 +2,4 @@
 
 ##### Repo for various classification/regression algorithms
 ##### Usually random challenges or personal (short) projects 
-##### Each bit of code will come with cleaned dataset on which I used my algorithm on
+##### Each bit of code will come with cleaned dataset on which I used my algorithm on (original datasets usually from Kaggle)
